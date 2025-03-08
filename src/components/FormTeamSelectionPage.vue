@@ -12,7 +12,7 @@
     </FormGroup>
     <FormGroup :show="isTBA" :label-type="LabelType.PlainText" name="Teams Loaded">{{ teamsLoadStatus }}</FormGroup>
     <FormGroup :show="isTBA" :label-type="LabelType.PlainText" name="Matches Loaded">{{ matchesLoadStatus }}</FormGroup>
-    <FormGroup :label-type="LabelType.LabelTag" id="match-level-input" name="Match Level">
+    <FormGroup :show="!isTBA" :label-type="LabelType.LabelTag" id="match-level-input" name="Match Level">
       <select id="match-level-input" v-model.number="matchLevel" :disabled="config.data.forceQualifiers">
         <option value="0">Qualifications</option>
         <option value="1">Playoffs</option>
@@ -39,6 +39,7 @@
         <option value="Blue">Blue</option>
       </select>
     </FormGroup>
+    <button @click="resetLocalStorage">Reset Cache</button>
   </FormPage>
 </template>
 
@@ -66,13 +67,12 @@ const config = useConfigStore();
 const tba = useTBAStore();
 const widgets = useWidgetsStore();
 
-const selectType = $ref(0);
+const selectType = $ref(parseInt(localStorage.getItem("selectType") || "0"));
 let eventKey = $ref("");
-const matchLevel = $ref(0);
-//const matchNumber = $ref(1);
+const matchLevel = $ref(parseInt(localStorage.getItem("matchLevel") || "0"));
 const selectedTeam = $ref(parseInt(localStorage.getItem("selectedTeam") || "0"));
-const matchNumber = $ref(parseInt(localStorage.getItem("matchNumber") || "0"));
-
+const matchNumber = $ref(parseInt(localStorage.getItem("matchNumber") || "1") + 1);
+localStorage.setItem("matchNumber", matchNumber.toString());
 const teamNumberManual = $ref(0);
 const teamColorManual = $ref("Red");
 
@@ -157,12 +157,25 @@ function loadTBAData() {
   matchesLoadStatus = "Loading...";
   tba.load(eventKey, "matches").then(value => updateStatus($$(matchesLoadStatus), $$(matches), value));
 }
+function resetLocalStorage(){
+  localStorage.clear();
+  localStorage.setItem("matchNumber", 0);
+  location.reload();
+}
 watch($$(selectedTeam), (newValue) => {
   localStorage.setItem("selectedTeam", newValue.toString());
 });
-watch($$(matchNumber), (newValue) => {
-  localStorage.setItem("matchNumber", newValue+1);
+watch($$(selectType), (newValue) => {
+  localStorage.setItem("selectType", newValue.toString());
 });
+watch($$(matchLevel), (newValue) => {
+  localStorage.setItem("matchLevel", newValue.toString());
+});
+//cache new value 
+watch($$(matchNumber), (newValue) => {
+  localStorage.setItem("matchNumber", newValue.toString());
+});
+
 </script>
 
 <style>

@@ -24,7 +24,7 @@
           "col": 3
         },
         {
-          "name": "Handling",
+          "name": "Handling/Driving",
           "type": "dropdown",
           "options": [
             "1 (Worst)",
@@ -92,6 +92,10 @@
           "type": "stopwatch"
         },
         {
+          "name": "Cycle Time",
+          "type": "stopwatch"
+        },
+        {
           "name": "Scoring Patterns",
           "type": "positions",
           "file": "reefscape.png",
@@ -111,34 +115,22 @@
           ]
         },
         {
-          "name": "Comments",
-          "type": "textarea"
-        }
-      ]
-    },
-    {
-      "name": "Human Player Judgement",
-      "widgets": [
+          "name": "Human Player",
+          "type": "heading"
+        },
         {
           "name": "How many thrown in the net",
           "type": "spinbox"
         },
         {
-          "name": "How many thrown to ground",
-          "type": "spinbox"
-        },
-        {
           "name": "How many throws missed",
-          "type": "spinbox"
+          "type": "spinbox",
+          "row": 12,
+          "col": 2
         },
         {
-          "name": "Get the human player's autograph here!",
-          "type": "heading"
-        },
-        {
-          "name": "Get their autograph here",
-          "type": "label",
-          "file": "demo.png"
+          "name": "Comments",
+          "type": "textarea"
         }
       ]
     }
