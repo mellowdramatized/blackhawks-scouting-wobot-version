@@ -79,7 +79,9 @@ function clearForm() {
   if (bool){
     bool=false;
     widgets.save();
-  
+    let currentMatchNumber = parseInt(localStorage.getItem("matchNumber") || "1");
+    currentMatchNumber++;
+    localStorage.setItem("matchNumber", currentMatchNumber.toString());
     launchConfetti();
     setTimeout(() => {
     router.go(0); // Reload the page

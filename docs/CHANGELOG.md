@@ -2,6 +2,15 @@
 
 This document tracks the changes between Black Hawks Scouting versions. Dates are written in the MM/DD/YYYY format.
 
+## 2025.2
+  -Match number increments only after save and clear
+## 2025.1
+  - Cache
+  - Positions update
+  - Touch ups
+## 2025.0
+ - 2025 game release.
+
 ## 2024.1 (03/01/2024)
 
 ### Additions

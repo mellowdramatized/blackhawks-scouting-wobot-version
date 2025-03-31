@@ -71,14 +71,13 @@ const selectType = $ref(parseInt(localStorage.getItem("selectType") || "0"));
 let eventKey = $ref("");
 const matchLevel = $ref(parseInt(localStorage.getItem("matchLevel") || "0"));
 const selectedTeam = $ref(parseInt(localStorage.getItem("selectedTeam") || "0"));
-const matchNumber = $ref(parseInt(localStorage.getItem("matchNumber") || "1") + 1);
+const matchNumber = $ref(parseInt(localStorage.getItem("matchNumber") || "1"));
 localStorage.setItem("matchNumber", matchNumber.toString());
 const teamNumberManual = $ref(0);
 const teamColorManual = $ref("Red");
 
 let teamsLoadStatus = $ref("");
 let matchesLoadStatus = $ref("");
-
 const teams = $ref<unknown[]>();
 const matches = $ref<unknown[]>();
 
@@ -159,7 +158,7 @@ function loadTBAData() {
 }
 function resetLocalStorage(){
   localStorage.clear();
-  localStorage.setItem("matchNumber", 0);
+  localStorage.setItem("matchNumber", 1);
   location.reload();
 }
 watch($$(selectedTeam), (newValue) => {
@@ -172,6 +171,9 @@ watch($$(matchLevel), (newValue) => {
   localStorage.setItem("matchLevel", newValue.toString());
 });
 //cache new value 
+watch($$(matchNumber), (newValue) => {
+  localStorage.setItem("matchNumber", newValue.toString());
+});
 watch($$(matchNumber), (newValue) => {
   localStorage.setItem("matchNumber", newValue.toString());
 });
