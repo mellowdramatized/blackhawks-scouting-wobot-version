@@ -67,18 +67,28 @@ const isInputVisible = ref(false);
 const inputCode = ref("");
 const codeInput = ref<HTMLInputElement | null>(null);
 
-const videoFiles = computed(() => props.data.files || [props.data.file]);
-const absolutePath = computed(() => `/assets/${videoFiles.value[currentIndex.value]}`);
-const isVideo = computed(() => videoFiles.value[currentIndex.value].endsWith('.mp4'));
+const videoFiles = computed(() => props.data.files ?? []);
 
-// (Keyboard Key Codes)
+// Convert Google Drive share link to direct download link
+const getGoogleDriveDirectLink = (url: string | undefined) => {
+  if (!url) return ""; // Prevent errors if URL is undefined
+  const match = url.match(/\/d\/(.+?)\//);
+  return match ? `https://drive.google.com/uc?export=download&id=${match[1]}` : url;
+};
+
+// Compute the full path of the current file (Supports Google Drive links)
+const absolutePath = computed(() => 
+  getGoogleDriveDirectLink(videoFiles.value[currentIndex.value] || "")
+);
+
+
+// Determine if the file is a video
+//const isVideo = computed(() => videoFiles.value[currentIndex.value].endsWith('.mp4'));
+
+// Konami Code (Desktop)
 const konamiCodeKeys = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; 
 let konamiIndex = 0;
 
-//for Mobile
-const konamiString = "↑↑↓↓←→←→BA";
-
-//(Desktop)
 const konamiListener = (event: KeyboardEvent) => {
   if (event.keyCode === konamiCodeKeys[konamiIndex]) {
     konamiIndex++;
@@ -91,12 +101,14 @@ const konamiListener = (event: KeyboardEvent) => {
   }
 };
 
-// (Triggers Input on Mobile)
+// (Mobile) Konami Code
+const konamiString = "K2UP2DOWN2LEFTRIGHTBA";
+
+// Handle Mobile Input Activation (Double Tap)
 let lastTouch = 0;
 const handleTouch = () => {
   const now = Date.now();
   if (now - lastTouch < 300) {
-    // Double-tap detected: Show input field
     isInputVisible.value = true;
     nextTick(() => {
       codeInput.value?.focus();
@@ -116,7 +128,7 @@ const checkKonamiCode = () => {
   inputCode.value = "";
 };
 
-// Start listening for Konami Code on Desktop
+// Start Konami Code Listener (Desktop)
 const startKonamiListener = () => {
   konamiIndex = 0;
   window.addEventListener("keydown", konamiListener);
@@ -132,7 +144,7 @@ const activateEasterEgg = () => {
 // Watch for changes and reload the video
 watch(currentIndex, async () => {
   props.data.file = videoFiles.value[currentIndex.value];
-  if (videoPlayer.value && isVideo.value) {
+  if (videoPlayer.value) {
     await nextTick();
     videoPlayer.value.load();
     videoPlayer.value.play().catch(() => {});
