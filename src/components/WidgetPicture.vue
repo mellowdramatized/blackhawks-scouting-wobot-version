@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Hidden Activation Trigger (Double Tap Logo) -->
+    <!-- Hidden Activation Trigger (Double Click or Double Tap) -->
     <img 
       src="/assets/blank.png" 
       alt="Hidden Trigger" 
@@ -23,25 +23,23 @@
 
     <!-- Secret Media Player (Hidden until activated) -->
     <div v-if="isEasterEggActive">
+      <iframe 
+        v-if="isDriveVideo" 
+        :src="absolutePath"
+        width="240" 
+        height="360"
+        allow="autoplay"
+      ></iframe>
+
       <video 
-        v-if="isVideo" 
+        v-else 
         :src="absolutePath" 
-        :width="data.width || '240'" 
-        :height="data.height || '360'" 
+        width="240" 
+        height="360" 
         controls 
         ref="videoPlayer"
         @ended="nextVideo"
-      >
-        Your browser does not support the video tag.
-      </video>
-
-      <img 
-        v-else 
-        :src="absolutePath" 
-        :alt="`Could not load file ${data.file}`" 
-        :width="data.width || 'auto'" 
-        :height="data.height || 'auto'" 
-      />
+      ></video>
 
       <div class="controls">
         <button @click="prevVideo" :disabled="currentIndex === 0">Previous</button>
@@ -52,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick, onMounted, onUnmounted } from "vue";
+import { ref, computed, watch, nextTick, onUnmounted } from "vue";
 import { Widget, WidgetPicture } from "@/config";
 
 const props = defineProps<{
@@ -67,32 +65,26 @@ const isInputVisible = ref(false);
 const inputCode = ref("");
 const codeInput = ref<HTMLInputElement | null>(null);
 
-const videoFiles = computed(() => props.data.files ?? []);
+const videoFiles = computed(() => props.data.files || [props.data.file]);
+const currentFile = computed(() => videoFiles.value[currentIndex.value]);
 
-// Convert Google Drive share link to direct download link
-const getGoogleDriveDirectLink = (url: string | undefined) => {
-  if (!url) return ""; // Prevent errors if URL is undefined
-  const match = url.match(/\/d\/(.+?)\//);
-  return match ? `https://drive.google.com/uc?export=download&id=${match[1]}` : url;
-};
+const isDriveVideo = computed(() => currentFile.value.includes("drive.google.com"));
+const absolutePath = computed(() => isDriveVideo.value ? currentFile.value : `/assets/${currentFile.value}`);
+const isVideo = computed(() => isDriveVideo.value || currentFile.value.endsWith('.mp4'));
 
-// Compute the full path of the current file (Supports Google Drive links)
-const absolutePath = computed(() => 
-  getGoogleDriveDirectLink(videoFiles.value[currentIndex.value] || "")
-);
-
-
-// Determine if the file is a video
-//const isVideo = computed(() => videoFiles.value[currentIndex.value].endsWith('.mp4'));
+// Debugging Helper
+const log = (message: string) => console.log(`[DEBUG]: ${message}`);
 
 // Konami Code (Desktop)
-const konamiCodeKeys = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; 
+const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
 let konamiIndex = 0;
 
+// Listen for Konami Code Input
 const konamiListener = (event: KeyboardEvent) => {
-  if (event.keyCode === konamiCodeKeys[konamiIndex]) {
+  log(`Key Pressed: ${event.keyCode}`);
+  if (event.keyCode === konamiCode[konamiIndex]) {
     konamiIndex++;
-    if (konamiIndex === konamiCodeKeys.length) {
+    if (konamiIndex === konamiCode.length) {
       activateEasterEgg();
       window.removeEventListener("keydown", konamiListener);
     }
@@ -101,10 +93,7 @@ const konamiListener = (event: KeyboardEvent) => {
   }
 };
 
-// (Mobile) Konami Code
-const konamiString = "K2UP2DOWN2LEFTRIGHTBA";
-
-// Handle Mobile Input Activation (Double Tap)
+// Mobile Double Tap Input Handling
 let lastTouch = 0;
 const handleTouch = () => {
   const now = Date.now();
@@ -117,7 +106,8 @@ const handleTouch = () => {
   lastTouch = now;
 };
 
-// Validate Mobile Konami Code
+// Konami Code (Mobile)
+const konamiString = "K2UP2DOWN2LEFTRIGHTBA";
 const checkKonamiCode = () => {
   if (inputCode.value.toUpperCase() === konamiString) {
     activateEasterEgg();
@@ -128,44 +118,33 @@ const checkKonamiCode = () => {
   inputCode.value = "";
 };
 
-// Start Konami Code Listener (Desktop)
+// Start Konami Code Listener on Double Click
 const startKonamiListener = () => {
+  log("Double Click Detected. Listening for Konami Code.");
   konamiIndex = 0;
   window.addEventListener("keydown", konamiListener);
-  alert("Error: Code 69420");
+  alert("Konami Code Activated! Enter the sequence.");
 };
 
 // Activate Easter Egg
 const activateEasterEgg = () => {
   isEasterEggActive.value = true;
-  alert("Good Boy");
+  alert("Easter Egg Unlocked!");
 };
 
-// Watch for changes and reload the video
-watch(currentIndex, async () => {
-  props.data.file = videoFiles.value[currentIndex.value];
-  if (videoPlayer.value) {
-    await nextTick();
-    videoPlayer.value.load();
-    videoPlayer.value.play().catch(() => {});
-  }
-});
-
-// Go to the next video
+// Video Navigation
 const nextVideo = () => {
   if (currentIndex.value < videoFiles.value.length - 1) {
     currentIndex.value++;
   }
 };
-
-// Go to the previous video
 const prevVideo = () => {
   if (currentIndex.value > 0) {
     currentIndex.value--;
   }
 };
 
-// Cleanup when the component unmounts
+// Cleanup
 onUnmounted(() => {
   window.removeEventListener("keydown", konamiListener);
 });
