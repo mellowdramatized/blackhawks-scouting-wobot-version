@@ -100,7 +100,7 @@ const currentMatch = $computed(() => {
   matchList.sort((first: unknown, second: unknown) => diff(first, second, "match") || diff(first, second, "set"));
   return matchList[matchNumber - 1] ?? null;
 });
-
+loadTBAData();
 // The teams playing in the selected match
 const teamsList = $computed(() => {
   const result = new Array<Team>();
@@ -174,9 +174,7 @@ watch($$(matchLevel), (newValue) => {
 watch($$(matchNumber), (newValue) => {
   localStorage.setItem("matchNumber", newValue.toString());
 });
-watch($$(matchNumber), (newValue) => {
-  localStorage.setItem("matchNumber", newValue.toString());
-});
+
 
 </script>
 
