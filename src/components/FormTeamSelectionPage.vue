@@ -39,7 +39,7 @@
         <option value="Blue">Blue</option>
       </select>
     </FormGroup>
-    <button @click="resetLocalStorage">Reset Cache</button>
+    
   </FormPage>
 </template>
 
