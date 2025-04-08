@@ -80,6 +80,7 @@ function computeTeam(team){
   if(team===4) return "Blue2";
   if(team===5) return "Blue3";
 }
+
 function deleteData() {
   if (!selectedEntry.value) return;
   if (!confirm("Delete this entry permanently?")) return;
@@ -102,7 +103,6 @@ function deleteData() {
   }
 }
 
-// Function to download data
 function downloadData() {
   if (!downloadLink.value || !selectedEntry.value) return;
   let Team = computeTeam(parseInt(localStorage.getItem("selectedTeam") || "-1"));
@@ -123,7 +123,7 @@ function downloadData() {
   downloadLink.value.download = fileName;
   downloadLink.value.click();
 
-  // Store new entry in history for this specific entry
+  // Store new entry in history
   if (!entryHistories.value[entryName]) {
     entryHistories.value[entryName] = [];
   }
