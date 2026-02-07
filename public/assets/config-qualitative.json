@@ -88,53 +88,27 @@
           "height": 5
         },
         {
-          "name": "surf",
-          "type": "picture",
-          "file": "https://drive.google.com/file/d/145idST6FORcsL40eWDsClB2ZIA8DzdX5/preview",
-          "files": ["https://drive.google.com/file/d/145idST6FORcsL40eWDsClB2ZIA8DzdX5/preview","https://drive.google.com/file/d/1hceLKC-ppZSNWcEXg0GwMDYCe5CgiXWR/preview"],
-          "col": 4
-        },
-        {
           "name": "Pin Time",
           "type": "stopwatch"
+        },
+        {
+          "name": "Hopper Size",
+          "type": "number"
+        },
+        {
+          "name": "Turret",
+          "type": "multicheckbox",
+          "options": [
+            "Auto-aiming",
+            "Auto-shooting"
+          ]
         },
         {
           "name": "Cycle Time",
           "type": "stopwatch"
         },
-        {
-          "name": "Scoring Patterns",
-          "type": "positions",
-          "file": "reefscape.png",
-          "allowMultiple": true,
-          "colspan": 3
-        },
-        {
-          "name": "Common Scoring Locations",
-          "type": "multicheckbox",
-          "options": [
-            "Trough",
-            "L2",
-            "L3",
-            "L4",
-            "Proccesor",
-            "Barge"
-          ]
-        },
-        {
-          "name": "Human Player",
-          "type": "heading"
-        },
-        {
-          "name": "How many thrown in the net",
-          "type": "spinbox"
-        },
-        {
-          "name": "How many throws missed",
-          "type": "spinbox",
-          "row": 12,
-          "col": 2
-        },
+       
+        
         {
           "name": "Comments",
           "type": "textarea"
