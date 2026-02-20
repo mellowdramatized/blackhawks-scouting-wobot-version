@@ -84,6 +84,20 @@
           ]
         },
         {
+          "name": "Accessibility",
+          "type": "dropdown",
+          "options": [
+            "1 (Lowest)",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6 (Highest)"
+          ],
+          "row": 5,
+          "col": 3
+        },
+        {
           "type": "spacer",
           "height": 5
         },

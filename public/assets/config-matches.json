@@ -29,11 +29,7 @@
           "type": "heading",
           "col": 3
         },
-        {
-          "name": "Went to Middle",
-          "type": "checkbox",
-          "col":3
-        },
+        
         {
           "name": "Fuel Scored",
           "type": "spinbox",
@@ -44,6 +40,11 @@
           "name": "Pick-up Locations",
           "type": "heading",
           "col": 3
+        },
+        {
+          "name": "Went to Middle",
+          "type": "checkbox",
+          "col":3
         },
         {
           "name": "Human Player Station",

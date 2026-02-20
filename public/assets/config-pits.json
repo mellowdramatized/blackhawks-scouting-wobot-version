@@ -98,10 +98,6 @@
             ]
           },
           {
-            "name": "Cycle Time Algae",
-            "type": "number"
-          },
-          {
             "name": "Climb Time",
             "type": "number"
           },
