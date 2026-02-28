@@ -34,7 +34,8 @@ const setValue = (newValue: number) => value = inRange(newValue, min, max) ? new
 <style lang="postcss">
 .spinbox {
   text-align: center;
-  width: 4em;
+  width: 9ch;
+  height: 8ch;
   appearance: textfield;
 
   &::-webkit-outer-spin-button,
@@ -45,9 +46,9 @@ const setValue = (newValue: number) => value = inRange(newValue, min, max) ? new
 }
 
 .spinbox-btn {
-  border-radius: 10%;
-  width: 2ch;
-  height: 2ch;
+  border-radius: 7.5%;
+  width: 8ch;
+  height: 8ch;
   padding: 0;
 }
 </style>

@@ -23,13 +23,6 @@
       "name": "Autonomous",
       "widgets": [
         
-        
-        {
-          "name":"Scoring",
-          "type": "heading",
-          "col": 3
-        },
-        
         {
           "name": "Fuel Scored",
           "type": "spinbox",
@@ -37,22 +30,12 @@
           "batch": true
         },
         {
-          "name": "Assists",
-          "type": "heading",
-          "col":3
-        },
-        {
-          "name" : "Passed",
+          "name" : "Assists",
           "type": "spinbox",
           "col": 3,
           "batch": true
         },
-        {
-          "name" : "Pushed",
-          "type": "spinbox",
-          "col": 3,
-          "batch": true
-        },
+
         {
           "name": "Pick-up Locations",
           "type": "heading",
@@ -122,69 +105,20 @@
     {
       "name": "Teleop",
       "widgets": [
+  
+
+
         {
-          "name": "Scoring",
-          "type": "heading",
-          "col":3
-        },
-        {
-          "name": "Fuel Scored: Transition Period",
+          "name": "Fuel Scored",
           "type": "spinbox",
           "col": 3,
           "batch": true
         },
+
+   
         {
-          "name": "Fuel Scored: Activation 1",
+          "name" : "Assists",
           "type": "spinbox",
-          "col": 3,
-          "batch": true
-        },
-        {
-          "name": "Fuel Scored: Activation 2",
-          "type": "spinbox",
-          "col": 3,
-          "batch": true
-        },
-        {
-          "name": "Assists",
-          "type": "heading",
-          "col":3
-        },
-        {
-          "name" : "Passed",
-          "type": "spinbox",
-          "col": 3,
-          "batch": true
-        },
-        {
-          "name" : "Pushed",
-          "type": "spinbox",
-          "col": 3,
-          "batch": true
-        },
-        {
-          "name": "Pickup Locations",
-          "type": "heading",
-          "col":3
-        },
-        {
-          "name": "Ground",
-          "col": 3,
-          "type": "checkbox"
-        },
-        {
-          "name": "Human Player Station",
-          "col": 3,
-          "type": "checkbox"
-        },
-        {
-          "name": "Depot",
-          "col": 3,
-          "type": "checkbox"
-        },
-        {
-          "name": "Team Side During Activation",
-          "type": "checkbox",
           "col": 3,
           "batch": true
         }
@@ -194,16 +128,7 @@
     {
       "name": "Endgame",
       "widgets": [
-        {
-          "name": "Scoring",
-          "type": "heading"
-        },
-        {
-          "name": "Fuel Scored",
-          "type": "spinbox",
-          
-          "batch": true
-        },
+
         {
           "name": "Climb",
           "type": "heading"
@@ -251,16 +176,52 @@
         {
           "name": "Failed Climb",
           "type": "checkbox"
+        }
+      ]
+    },
+        {
+      "name": "Match Review",
+      "widgets": [
+        
+        {
+          "name": "Pickup Locations (Teleop)",
+          "type": "multicheckbox",
+          "options": [
+            "Ground",
+            "Human Player Station",
+            "Depot",
+            "Team Side During Activation"
+          ]
         },
         {
-          "name": "Submission",
-          "type": "heading"
+          "name": "Crossing",
+          "type": "multicheckbox",
+          "options": [
+            "Bump",
+            "Trench"
+          ]
+        },
+        {
+          "name": "Shooter Type",
+          "type": "dropdown",
+          "options": [
+            "None",
+            "1 Shooter",
+            "2 Shooter",
+            "3 Shooter",
+            "1 Turret",
+            "2 Turret",
+            "Other"
+          ]
+        },
+        {
+          "name": "Penatlties",
+          "type": "checkbox"
         },
         {
           "name": "Mechanical Failures",
           "type": "text"
         },
-        
         {
         "name": "Scouter Name",
           "type": "text",
@@ -269,6 +230,7 @@
             "value": 0
         }
       }
+      
       ]
     }
   ]
